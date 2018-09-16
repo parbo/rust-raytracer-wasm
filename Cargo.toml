@@ -13,8 +13,8 @@ default-features = ["console_error_panic_hook", "wee_alloc"]
 cfg-if = "0.1.2"
 wasm-bindgen = "0.2.21"
 js-sys = "0.2.6"
-rust-raytracer = { path = "../rust-raytracer" }
-#rust-raytracer = { git = "https://github.com/parbo/rust-raytracer" }
+#rust-raytracer = { path = "../rust-raytracer" }
+rust-raytracer = { git = "https://github.com/parbo/rust-raytracer" }
 
 # The `console_error_panic_hook` crate provides better debugging of panics by
 # logging them with `console.error`. This is great for development, but requires
