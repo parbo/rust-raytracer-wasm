@@ -1,0 +1,10 @@
+/target
+**/*.rs.bk
+Cargo.lock
+/node_modules
+rust_raytracer_wasm.js
+rust_raytracer_wasm.d.ts
+rust_raytracer_wasm.wasm
+pkg/
+wasm-pack.log
+.vscode
