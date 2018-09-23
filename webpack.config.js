@@ -14,6 +14,8 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "bootstrap.js",
+    libraryTarget: 'var',
+    library: 'raytracer'
   },
   resolve: {
     extensions: ['.js', '.wasm']

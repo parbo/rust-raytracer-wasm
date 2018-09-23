@@ -15,10 +15,51 @@
 	  align-items: center;
 	  justify-content: center;
       }
+      nav {
+	  position: absolute;
+	  left: 0px;
+	  max-width: 200px;
+	  display: flex;
+	  flex-direction: column;
+      }
+      nav.button {
+	  color: ¤3456ff;
+	  width: 100%
+      }
+      #canvases {
+	  right: 0
+      }
     </style>
+    <script src="./bootstrap.js"></script>
   </head>
   <body>
-    <canvas id="gml-canvas"></canvas>
-    <script src="./bootstrap.js"></script>
+    <nav>
+      <button onclick="raytracer.renderGml('gml/checked-cube.gml')">checked-cube.gml</button>
+      <button onclick="raytracer.renderGml('gml/chess.gml')">chess.gml</button>
+      <button onclick="raytracer.renderGml('gml/cone-fractal.gml')">cone-fractal.gml</button>
+      <button onclick="raytracer.renderGml('gml/cone.gml')">cone.gml</button>
+      <button onclick="raytracer.renderGml('gml/cube.gml')">cube.gml</button>
+      <button onclick="raytracer.renderGml('gml/cylinder.gml')">cylinder.gml</button>
+      <button onclick="raytracer.renderGml('gml/dice.gml')">dice.gml</button>
+      <button onclick="raytracer.renderGml('gml/ellipsoid.gml')">ellipsoid.gml</button>
+      <button onclick="raytracer.renderGml('gml/fov.gml')">fov.gml</button>
+      <button onclick="raytracer.renderGml('gml/fractal.gml')">fractal.gml</button>
+      <button onclick="raytracer.renderGml('gml/golf.gml')">golf.gml</button>
+      <button onclick="raytracer.renderGml('gml/holes.gml')">holes.gml</button>
+      <button onclick="raytracer.renderGml('gml/house.gml')">house.gml</button>
+      <button onclick="raytracer.renderGml('gml/intercyl.gml')">intercyl.gml</button>
+      <button onclick="raytracer.renderGml('gml/intersect.gml')">intersect.gml</button>
+      <button onclick="raytracer.renderGml('gml/pipe.gml')">pipe.gml</button>
+      <button onclick="raytracer.renderGml('gml/rotate.gml')">rotate.gml</button>
+      <button onclick="raytracer.renderGml('gml/single-sphere.gml')">single-sphere.gml</button>
+      <button onclick="raytracer.renderGml('gml/snowgoon.gml')">snowgoon.gml</button>
+      <button onclick="raytracer.renderGml('gml/spheres.gml')">spheres.gml</button>
+      <button onclick="raytracer.renderGml('gml/spotlight.gml')">spotlight.gml</button>
+      <button onclick="raytracer.renderGml('gml/tower.gml')">tower.gml</button>
+      <button onclick="raytracer.renderGml('gml/two-spheres.gml')">two-spheres.gml</button>
+    </nav>
+    <div id="canvases">
+      <canvas id="gml-canvas"></canvas>
+    </div>
   </body>
 </html>
