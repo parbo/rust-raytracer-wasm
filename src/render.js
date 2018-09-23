@@ -22,10 +22,13 @@ self.addEventListener('message', async (event) => {
     const raytracer = self.wasm_bindgen;
 
     // render the gml
-    const renderPixel = (x, y, r, g, b) => {
-      self.postMessage([x, y, r, g, b]);
+    const newImage = (name, w, h) => {
+      self.postMessage(['image', name, w, h]);
     }
-    raytracer.render_gml(gml, renderPixel);
+    const renderLine = (line) => {
+      self.postMessage(['line', line]);
+    }
+    raytracer.render_gml(gml, newImage, renderLine);
     self.close();
   } catch (e) {
     self.postMessage({

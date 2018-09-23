@@ -44,18 +44,23 @@ canvas.width = 640;
 canvas.height = 480;
 
 const ctx = canvas.getContext('2d');
-let id = ctx.createImageData(1,1);
-let d  = id.data;
 
 let w = Worker();
+let data = {y: 0};
 
 w.onmessage = function (e) {
-  const [x, y, r, g, b] = e.data;
-  d[0] = r * 255;
-  d[1] = g * 255;
-  d[2] = b * 255;
-  d[3] = 255;
-  ctx.putImageData( id, x, y );
+  if (e.data[0] === 'image') {
+    data.y = 0;
+  } else if (e.data[0] === 'line') {
+    let buffer = e.data[1];
+    let draw = () => {
+      const imageData = new ImageData(buffer, canvas.width, 1);
+      ctx.putImageData(imageData, 0, data.y);
+      data.y = data.y + 1;
+    }
+    requestAnimationFrame(draw);
+  }
 };
 
+console.log("rendering gml: " + gml);
 w.postMessage([gml.join("\n")]);
