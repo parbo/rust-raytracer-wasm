@@ -1,4 +1,6 @@
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: "./src/bootstrap.js",
@@ -20,5 +22,21 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.wasm']
   },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: './src/index.html',
+      inject: true,
+      minify: {
+        removeComments: true,
+        collapseWhitespace: false
+      }
+    }),
+    new CopyWebpackPlugin([
+      {
+        from: 'gml',
+        to: 'gml'
+      }
+    ])
+  ],
   mode: "development",
 };
