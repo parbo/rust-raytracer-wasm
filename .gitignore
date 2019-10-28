@@ -8,3 +8,4 @@ rust_raytracer_wasm.wasm
 pkg/
 wasm-pack.log
 .vscode
+dist/
