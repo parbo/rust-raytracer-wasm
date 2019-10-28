@@ -1,15 +1,14 @@
 extern crate cfg_if;
-extern crate wasm_bindgen;
-extern crate rust_raytracer;
 extern crate js_sys;
+extern crate rust_raytracer;
+extern crate wasm_bindgen;
 
 mod utils;
 
 use wasm_bindgen::prelude::*;
-use std::rc::Rc;
 
 #[wasm_bindgen]
-extern {
+extern "C" {
     #[wasm_bindgen(js_namespace = console)]
     fn log(msg: &str);
 }
@@ -24,17 +23,20 @@ struct JsRenderer {
     h: i64,
     line: Vec<u8>,
     new_image_function: js_sys::Function,
-    push_line_function: js_sys::Function
+    push_line_function: js_sys::Function,
 }
 
 impl JsRenderer {
-    fn new(new_image_function: js_sys::Function, push_line_function: js_sys::Function) -> JsRenderer {
+    fn new(
+        new_image_function: js_sys::Function,
+        push_line_function: js_sys::Function,
+    ) -> JsRenderer {
         JsRenderer {
             w: 0,
             h: 0,
             line: Vec::new(),
-            new_image_function: new_image_function,
-            push_line_function: push_line_function
+            new_image_function,
+            push_line_function,
         }
     }
 }
@@ -48,7 +50,7 @@ impl rust_raytracer::render::Renderer for JsRenderer {
         let jsname = JsValue::from(name);
         let jsw = JsValue::from(w as u32);
         let jsh = JsValue::from(h as u32);
-        let mut jsarr = js_sys::Array::new();
+        let jsarr = js_sys::Array::new();
         jsarr.push(&jsname);
         jsarr.push(&jsw);
         jsarr.push(&jsh);
@@ -72,18 +74,43 @@ impl rust_raytracer::render::Renderer for JsRenderer {
             }
             self.line.clear();
             let this = JsValue::NULL;
-            let mut jsarr = js_sys::Array::new();
+            let jsarr = js_sys::Array::new();
             let jsline = JsValue::from(line);
             jsarr.push(&jsline);
 
             let _ = self.push_line_function.apply(&this, &jsarr);
         }
     }
+    fn done(&mut self) {
+    }
+}
+
+struct JsRendererFactory {
+    new_image_function: js_sys::Function,
+    push_line_function: js_sys::Function,
+}
+
+impl JsRendererFactory {
+    fn new(
+        new_image_function: js_sys::Function,
+        push_line_function: js_sys::Function,
+    ) -> JsRendererFactory {
+        JsRendererFactory {
+            new_image_function,
+            push_line_function
+        }
+    }
+}
+
+impl rust_raytracer::render::RendererFactory for JsRendererFactory {
+    fn create(&self) -> Box<dyn rust_raytracer::render::Renderer> {
+        Box::new(JsRenderer::new(self.new_image_function.clone(), self.push_line_function.clone()))
+    }
 }
 
 #[wasm_bindgen]
-pub fn render_gml(gml: &str, new_image: js_sys::Function, push_line: js_sys::Function) {
-    let renderer = Box::new(JsRenderer::new(new_image, push_line));
-    rust_raytracer::render::set_renderer(renderer);
+pub fn render_gml(gml: &str, new_image: &js_sys::Function, push_line: &js_sys::Function) {
+    let renderer_factory = Box::new(JsRendererFactory::new(new_image.clone(), push_line.clone()));
+    rust_raytracer::render::set_renderer_factory(renderer_factory);
     rust_raytracer::render::render_gml(gml);
 }

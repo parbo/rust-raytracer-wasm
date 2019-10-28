@@ -6,10 +6,10 @@
     "build-wasm": "npm run cargo && npm run bindgen"
   },
   "devDependencies": {
-    "file-loader": "^1.1.11",
-    "webpack": "^4.0.1",
-    "webpack-cli": "^2.0.10",
-    "webpack-dev-server": "^3.1.0",
+    "file-loader": "^4.2.0",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.9",
+    "webpack-dev-server": "^3.9.0",
     "worker-loader": "^2.0.0"
   }
 }
